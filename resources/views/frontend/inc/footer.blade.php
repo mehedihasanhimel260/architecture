@@ -2,6 +2,7 @@
     $logos = App\Models\Logo::latest()->first();
 
     $WebsiteLink = App\Models\WebsiteLink::latest()->first();
+    $footer = App\Models\Footer::latest()->first();
 @endphp
 <footer class="style-2">
     <div class="container">
@@ -11,7 +12,7 @@
             </div>
 
             <div class="col-md-6">
-                &copy; Copyright 2023 - Archi Interior Design Template by <span class="id-color">Designesia</span>
+                &copy; Copyright 2023 - <span class="id-color">{{ $footer->copy_right_text }}</span>
             </div>
 
             <div class="col-md-3 text-right">

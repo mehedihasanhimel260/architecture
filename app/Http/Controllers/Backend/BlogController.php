@@ -201,7 +201,8 @@ class BlogController extends Controller
 
     public function tech_web_blog_details($id)
     {
+        $blogs = Blog::where('status', 1)->paginate(6);
         $blog_details = Blog::find($id);
-        return view('frontend.blog.blog-single', compact('blog_details'));
+        return view('frontend.blog.blog-single', compact('blog_details', 'blogs'));
     }
 }
