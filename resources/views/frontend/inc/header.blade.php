@@ -83,6 +83,8 @@
                         </li>
                         <li><a href="{{ route('contact.us') }}">Contact</a>
                         </li>
+                        <li><a href="{{ route('contact.us') }}">About Us</a>
+                        </li>
                     </ul>
                 </nav>
 
