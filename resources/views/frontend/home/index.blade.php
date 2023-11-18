@@ -9,26 +9,20 @@
             <div class="row align-items-center">
                 <div class="col-lg-5 offset-md-1 mb-sm-30 text-center wow fadeInRight">
                     <div class="de-images">
-                        <img class="di-small wow fadeIn" src="{{ asset('frontend/assets') }}/images-architecture/misc/2.jpg"
+                        <img class="di-small wow fadeIn" src="{{ asset($about->main_image) }}" alt="" />
+                        <img class="di-small-2" src="{{ asset($about->main_image) }}" alt="" />
+                        <img class="img-fluid wow fadeInRight" data-wow-delay=".25s" src="{{ asset($about->main_image) }}"
                             alt="" />
-                        <img class="di-small-2" src="{{ asset('frontend/assets') }}/images-architecture/misc/3.jpg"
-                            alt="" />
-                        <img class="img-fluid wow fadeInRight" data-wow-delay=".25s"
-                            src="{{ asset('frontend/assets') }}/images-architecture/misc/1.jpg" alt="" />
                     </div>
                 </div>
 
                 <div class="col-lg-5 offset-md-1 wow fadeInLeft" data-wow-delay="0s">
-                    <h2>Your Partner for<br><span class="id-color">Architecture and Construction</span></h2>
+                    <h2>Your Partner for<br><span class="id-color">{{ $about->title_english }}</span></h2>
                     <p>
-                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-                        voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint
-                        occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt
-                        mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et
-                        expedita distinctio.
+                        {!! $about->details_1_eng !!}
                     </p>
 
-                    <a href="#" class="btn-custom font-weight-bold">About Us</a>
+                    <a href="{{ route('about.details') }}" class="btn-custom font-weight-bold">About Us</a>
                 </div>
             </div>
         </div>
@@ -54,7 +48,7 @@
                 </div>
 
                 <div class="col-lg-4 col-md-5 text-right">
-                    <a href="contact.html" class="btn-black">Contact Us Now</a>
+                    <a href="{{ route('contact.us') }}" class="btn-black">Contact Us Now</a>
                 </div>
             </div>
         </div>
@@ -188,7 +182,7 @@
     </section>
 
     <!-- section begin -->
-    <section id="section-highlight">
+    {{-- <section id="section-highlight">
         <div class="wm wm-border dark wow fadeInDown ">02</div>
         <div class="container">
             <div class="row">
@@ -276,7 +270,7 @@
 
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- section close -->
 
 

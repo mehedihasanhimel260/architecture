@@ -3,25 +3,35 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+
+use App\Models\Project;
 use Illuminate\Http\Request;
-use App\Models\Service;
 use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
 
-class ServiceController extends Controller
+class ProjectController extends Controller
 {
-    public function tech_web_all_services()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $services = Service::latest('id', 'DESC')->get();
-        return view('backend.service.all_service', compact('services'));
-    } //end method-------------------------------------
+        $projectsData = Project::get();
+        return view('backend.project.index', compact('projectsData'));
+    }
 
-    public function tech_web_add_services()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        return view('backend.service.add_service');
-    } //end method-------------------------------------
+        return view('backend.project.create');
+    }
 
-    public function tech_web_service_store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         if ($request->hasFile('main_image')) {
             $main_image = $request->file('main_image');
@@ -54,7 +64,7 @@ class ServiceController extends Controller
             $detais_image_3_url = 'backend/service/details_images/' . $detais_image_3_name;
         }
 
-        Service::insert([
+        Project::insert([
             'title_english' => $request->title_english,
             'title_bangla' => $request->title_bangla,
             'price' => $request->price,
@@ -79,20 +89,34 @@ class ServiceController extends Controller
             'alert-type' => 'success',
         ];
         return redirect()
-            ->route('all.services')
+            ->route('project.index')
             ->with($notification);
-    } //end method---------------------------------------------------
+    }
 
-    public function tec_web_edit_service($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Project $project)
     {
-        $edit_service = Service::findOrFail($id);
-        return view('backend.service.edit_service', compact('edit_service'));
-    } //end method------------------------------------------
+        //
+    }
 
-    public function tec_web_update_store(Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $edit_service = Project::findOrFail($id);
+        return view('backend.project.edit', compact('edit_service'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
     {
         $id = $request->id;
-        $old_image = Service::find($id);
+        $old_image = Project::find($id);
         $del_main_image = $old_image->main_image;
         $del_banner_image = $old_image->banner_image;
         $del_details_image1 = $old_image->detais_image_1;
@@ -155,20 +179,34 @@ class ServiceController extends Controller
             $data['detais_image_3'] = $detais_image_3_url;
         }
 
-        Service::findOrFail($id)->update($data);
+        Project::findOrFail($id)->update($data);
 
         $notification = [
-            'message' => 'Services Updated Successfully!',
+            'message' => 'Project Updated Successfully!',
             'alert-type' => 'success',
         ];
         return redirect()
-            ->route('all.services')
+            ->route('project.index')
             ->with($notification);
-    } //end method-----------------------------------------------
+    }
 
-    public function tec_web_delete_service($id)
+    public function tec_web_project_inactive($id)
     {
-        $service_image = Service::findOrFail($id);
+        Project::findOrFail($id)->update(['status' => '0']);
+        return redirect()->back();
+    }
+    public function tec_web_project_active($id)
+    {
+        Project::findOrFail($id)->update(['status' => '1']);
+        return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        $service_image = Project::findOrFail($id);
         // $image = $service_image->banner_image;
         @unlink($service_image->main_image);
         @unlink($service_image->banner_image);
@@ -176,101 +214,13 @@ class ServiceController extends Controller
         @unlink($service_image->detais_image_2);
         @unlink($service_image->detais_image_3); //delete banner_image from local path_folder
 
-        Service::findOrFail($id)->delete();
+        Project::findOrFail($id)->delete();
         $notification = [
-            'message' => 'Servicenner Data Deleted!',
+            'message' => 'Project Data Deleted!',
             'alert-type' => 'error',
         ];
         return redirect()
             ->back()
             ->with($notification);
-    } //end method-------------------------------------------
-
-    // service status active inactive method start ------------
-    public function tec_web_service_inactive($id)
-    {
-        Service::findOrFail($id)->update(['status' => '0']);
-        return redirect()->back();
-    }
-    public function tec_web_service_active($id)
-    {
-        Service::findOrFail($id)->update(['status' => '1']);
-        return redirect()->back();
-    }
-    // service status active inactive method end ------------
-
-    // basic package active inactive method start ------------
-    public function tec_web_basic_inactive($id)
-    {
-        Service::findOrFail($id)->update(['basic' => '0']);
-        return redirect()->back();
-    }
-    public function tec_web_basic_active($id)
-    {
-        Service::findOrFail($id)->update(['basic' => '1']);
-        return redirect()->back();
-    }
-    // basic package active inactive method end ------------
-
-    // premium package active inactive method start ------------
-    public function tec_web_premium_inactive($id)
-    {
-        Service::findOrFail($id)->update(['premium' => '0']);
-        return redirect()->back();
-    }
-    public function tec_web_premium_active($id)
-    {
-        Service::findOrFail($id)->update(['premium' => '1']);
-        return redirect()->back();
-    }
-    // premium package active inactive method end ------------
-
-    // luxury package active inactive method start ------------
-    public function tec_web_luxury_inactive($id)
-    {
-        Service::findOrFail($id)->update(['luxury' => '0']);
-        return redirect()->back();
-    }
-    public function tec_web_luxury_active($id)
-    {
-        Service::findOrFail($id)->update(['luxury' => '1']);
-        return redirect()->back();
-    }
-    // luxury package active inactive method end ------------
-
-    // frontend service method========================================
-
-    public function tech_web_service_details($id)
-    {
-        $blog_details = Service::findOrFail($id);
-        $blogs = Service::get();
-        // dd($service);
-        return view('frontend.service.index', compact('blog_details', 'blogs'));
-    } //end method---------------------------------------------
-
-    public function tech_web_all_fservices()
-    {
-        $services = Service::all();
-        return view('frontend.service.all_services', compact('services'));
-    } //
-
-    public function tech_web_all_service_price()
-    {
-        $services = Service::all();
-        return view('frontend.service.all_service_price', compact('services'));
-    } //end method ---------------------------------------
-
-    public function tech_web_packages()
-    {
-        $basic = Service::where('basic', 1)
-            ->where('status', 1)
-            ->get();
-        $premium = Service::where('premium', 1)
-            ->where('status', 1)
-            ->get();
-        $luxury = Service::where('luxury', 1)
-            ->where('status', 1)
-            ->get();
-        return view('frontend.service.package', compact('basic', 'premium', 'luxury'));
     }
 }

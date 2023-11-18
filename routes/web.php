@@ -16,11 +16,8 @@ use App\Http\Controllers\Backend\NoticeController;
 use App\Http\Controllers\Backend\SponsorController;
 use App\Http\Controllers\Backend\CounterController;
 use App\Http\Controllers\Backend\ContactController;
+use App\Http\Controllers\Backend\ProjectController;
 use App\Http\Controllers\Backend\SliderController;
-
-
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -49,20 +46,15 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'index']);
 });
-
 
 Route::controller(WebViewHomePageController::class)->group(function () {
     Route::get('/', 'tech_web_home_index')->name('webview.home.index');
 });
 
-
-
 // beckend all routes///////////////////////////////////////////////////////////////////////////
-
 
 // admin all route ..........................................
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -123,10 +115,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //Service setting all route end
     Route::controller(AboutController::class)->group(function () {
-        Route::get('/about/setting', 'tech_web_about_setting')->name('about.setting');       
+        Route::get('/about/setting', 'tech_web_about_setting')->name('about.setting');
         Route::post('/about/update/store', 'tech_web_about_store_and_update')->name('about.update.store');
     });
-
 
     //Team/teacher setting all route
     Route::controller(TeamController::class)->group(function () {
@@ -171,8 +162,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/delete/testimonial_2/{id}', 'tec_web_delete_testimonial_2')->name('delete.testimonial_2');
         Route::get('/testimonial_2/inactive/{id}', 'tec_web_testimonial_2_inactive')->name('testimonial_2.inactive');
         Route::get('/testimonial_2/active/{id}', 'tec_web_testimonial_2_active')->name('testimonial_2.active');
-
-
     });
 
     //video or Image Gallery setting all route
@@ -209,54 +198,53 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 
     //Sponsor setting all route
-    Route::controller(SponsorController::class)->group(function(){
-        Route::get('/all/sponsor', 'tech_web_all_sponsor')->name('all.sponsor');       
-        Route::get('/add/sponsor', 'tech_web_add_sponsor')->name('add.sponsor');       
-        Route::post('/sponsor/store', 'tech_web_sponsor_store')->name('sponsor.store');       
-        Route::get('/sponsor/edit/{id}', 'tech_web_sponsor_edit')->name('sponsor.edit');       
-        Route::post('/sponsor/update', 'tech_web_sponsor_update')->name('sponsor.update');       
-        Route::get('/sponsor/delete/{id}', 'tech_web_sponsor_delete')->name('sponsor.delete'); 
+    Route::controller(SponsorController::class)->group(function () {
+        Route::get('/all/sponsor', 'tech_web_all_sponsor')->name('all.sponsor');
+        Route::get('/add/sponsor', 'tech_web_add_sponsor')->name('add.sponsor');
+        Route::post('/sponsor/store', 'tech_web_sponsor_store')->name('sponsor.store');
+        Route::get('/sponsor/edit/{id}', 'tech_web_sponsor_edit')->name('sponsor.edit');
+        Route::post('/sponsor/update', 'tech_web_sponsor_update')->name('sponsor.update');
+        Route::get('/sponsor/delete/{id}', 'tech_web_sponsor_delete')->name('sponsor.delete');
         Route::get('/sponsor/inactive/{id}', 'tec_web_sponsor_inactive')->name('sponsor.inactive');
-        Route::get('/sponsor/active/{id}', 'tec_web_sponsor_active')->name('sponsor.active');      
+        Route::get('/sponsor/active/{id}', 'tec_web_sponsor_active')->name('sponsor.active');
     });
 
-     //Sponsor setting all route
-     Route::controller(CounterController::class)->group(function(){
-        Route::get('/counter/icon', 'tech_web_counter_icon')->name('counter.icon'); 
-        Route::post('/counter/icon/store', 'tech_web_counter_icon_store')->name('counter.icon.store'); 
-        Route::get('/counter/image', 'tech_web_counter_image')->name('counter.image'); 
+    //Sponsor setting all route
+    Route::controller(CounterController::class)->group(function () {
+        Route::get('/counter/icon', 'tech_web_counter_icon')->name('counter.icon');
+        Route::post('/counter/icon/store', 'tech_web_counter_icon_store')->name('counter.icon.store');
+        Route::get('/counter/image', 'tech_web_counter_image')->name('counter.image');
         Route::post('/counter/image/store', 'tech_web_counter_image_store')->name('counter.image.store');
-
     });
 
     //slider setting all route
-    Route::controller(SliderController::class)->group(function(){
-        Route::get('/slider/setting', 'tech_web_slider_setting')->name('all.slider'); 
-        Route::get('/slider/add', 'tech_web_add_slider')->name('add.slider'); 
-        Route::post('/slider/store', 'tech_web_slider_store')->name('slider.store'); 
-        Route::get('/edit/slide/{id}r', 'tech_web_slider_edit')->name('edit.slider'); 
-        Route::post('/update/slider', 'tech_web_slider_update')->name('slider.update'); 
-        Route::get('/delete.slider/{id}', 'tech_web_slider_delete')->name('delete.slider'); 
+    Route::controller(SliderController::class)->group(function () {
+        Route::get('/slider/setting', 'tech_web_slider_setting')->name('all.slider');
+        Route::get('/slider/add', 'tech_web_add_slider')->name('add.slider');
+        Route::post('/slider/store', 'tech_web_slider_store')->name('slider.store');
+        Route::get('/edit/slide/{id}r', 'tech_web_slider_edit')->name('edit.slider');
+        Route::post('/update/slider', 'tech_web_slider_update')->name('slider.update');
+        Route::get('/delete.slider/{id}', 'tech_web_slider_delete')->name('delete.slider');
         Route::get('/slider/inactive/{id}', 'tec_web_slider_inactive')->name('slider.inactive');
-        Route::get('/slider/active/{id}', 'tec_web_slider_active')->name('slider.active');       
+        Route::get('/slider/active/{id}', 'tec_web_slider_active')->name('slider.active');
     });
-
-
-
+    Route::resource('/admin/project', ProjectController::class);
+    
+    Route::get('/admin/project/inactive/{id}', [ProjectController::class, 'tec_web_project_inactive'])->name('project.inactive');
+    Route::get('/admin/project/active/{id}', [ProjectController::class, 'tec_web_project_active'])->name('project.active');
+    
 });
 
 // frontend all routes///////////////////////////////////////////////////////////////////////////
 
-Route::get('/service/details/{id}',[ServiceController::class, 'tech_web_service_details'])->name('service.details');
-Route::get('/all/fservices',[ServiceController::class, 'tech_web_all_fservices'])->name('all.fservices');
-Route::get('/all/service/price',[ServiceController::class, 'tech_web_all_service_price'])->name('all.service.price');
-Route::get('/about/details',[AboutController::class, 'tech_web_about_details'])->name('about.details');
-Route::get('/contact/us',[ContactController::class, 'tech_web_contact_us'])->name('contact.us');
-Route::post('/contactdata/store',[ContactController::class, 'tech_web_contactdata_store'])->name('contactdata.store');
-Route::get('/all/blogs/list',[BlogController::class, 'tech_web_all_blogs_list'])->name('all.blogs.list');
-Route::get('/blog/details/{id}',[BlogController::class, 'tech_web_blog_details'])->name('blog.details');
-Route::get('/packages',[ServiceController::class, 'tech_web_packages'])->name('packages');
-Route::get('/image-gallery',[GalleryController::class, 'tech_web_image_gallery'])->name('image.gallery');
-Route::get('/video-gallery',[GalleryController::class, 'tech_web_video_gallery'])->name('video.gallery');
-
-
+Route::get('/service/details/{id}', [ServiceController::class, 'tech_web_service_details'])->name('service.details');
+Route::get('/all/fservices', [ServiceController::class, 'tech_web_all_fservices'])->name('all.fservices');
+Route::get('/all/service/price', [ServiceController::class, 'tech_web_all_service_price'])->name('all.service.price');
+Route::get('/about/details', [AboutController::class, 'tech_web_about_details'])->name('about.details');
+Route::get('/contact/us', [ContactController::class, 'tech_web_contact_us'])->name('contact.us');
+Route::post('/contactdata/store', [ContactController::class, 'tech_web_contactdata_store'])->name('contactdata.store');
+Route::get('/all/blogs/list', [BlogController::class, 'tech_web_all_blogs_list'])->name('all.blogs.list');
+Route::get('/blog/details/{id}', [BlogController::class, 'tech_web_blog_details'])->name('blog.details');
+Route::get('/packages', [ServiceController::class, 'tech_web_packages'])->name('packages');
+Route::get('/image-gallery', [GalleryController::class, 'tech_web_image_gallery'])->name('image.gallery');
+Route::get('/video-gallery', [GalleryController::class, 'tech_web_video_gallery'])->name('video.gallery');

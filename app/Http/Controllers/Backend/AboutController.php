@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\About;
 use App\Models\Team;
 use App\Models\CounterIcon;
+use App\Models\Testimonial2;
 use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
 
@@ -27,7 +28,7 @@ class AboutController extends Controller
             $id = $about->id;
             // dd($id);
 
-            $data = array();
+            $data = [];
             $data['title_english'] = $request->title_english;
             $data['title_bangla'] = $request->title_bangla;
             $data['details_1_eng'] = $request->details_1_eng;
@@ -56,11 +57,13 @@ class AboutController extends Controller
 
             About::findOrFail($id)->update($data);
 
-            $notification = array(
+            $notification = [
                 'message' => 'About Data Updated Successfully!',
-                'alert-type' => 'success'
-            );
-            return redirect()->back()->with($notification);
+                'alert-type' => 'success',
+            ];
+            return redirect()
+                ->back()
+                ->with($notification);
         } else {
             //
 
@@ -83,21 +86,28 @@ class AboutController extends Controller
                 'details_2_bng' => $request->details_2_bng,
                 'main_image' => $about_image_save,
                 'banner_image' => $banner_image_save,
-                'created_at' => Carbon::now()
+                'created_at' => Carbon::now(),
             ]);
-            $notification = array(
+            $notification = [
                 'message' => 'About Dataa Inserted Successfully!',
-                'alert-type' => 'success'
-            );
-            return redirect()->back()->with($notification);
+                'alert-type' => 'success',
+            ];
+            return redirect()
+                ->back()
+                ->with($notification);
         }
     } //end method----------------------------------------------------
 
-    public function tech_web_about_details(){
+    public function tech_web_about_details()
+    {
         $about = About::first();
-        $teams = Team::inRandomOrder()->limit(6)->get();
-        $counter = CounterIcon::latest()->first();
-        return view('frontend.about.about_details',compact('about','teams','counter'));
+        $teams = Team::inRandomOrder()
+            ->limit(4)
+            ->get();
+        $testimonials = Testimonial2::where('status', 1)
+            ->latest()
+            ->limit(5)
+            ->get();
+        return view('frontend.about.index', compact('about', 'teams', 'testimonials'));
     }
-
 }

@@ -67,10 +67,18 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="services.html">Services</a>
+                        <li><a href="#">Services</a>
+                            @php
+                                $services = \App\Models\Service::get();
+                            @endphp
                             <ul>
-                                <li><a href="service-1.html">Residential Design</a></li>
-                                <li><a href="service-2.html">Hospitaly Design</a></li>
+                                @foreach ($services as $service)
+                                    <li>
+                                        <a
+                                            href="{{ route('service.details', $service->id) }}">{{ $service->title_english }}</a>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </li>
                         <li><a href="services.html">Gallary</a>
@@ -83,7 +91,7 @@
                         </li>
                         <li><a href="{{ route('contact.us') }}">Contact</a>
                         </li>
-                        <li><a href="{{ route('contact.us') }}">About Us</a>
+                        <li><a href="{{ route('about.details') }}">About Us</a>
                         </li>
                     </ul>
                 </nav>
