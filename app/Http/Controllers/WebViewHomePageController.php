@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Models\About;
 use App\Models\Blog;
 use App\Models\CounterIcon;
+use App\Models\Project;
 use App\Models\Sponsor;
 use App\Models\Team;
 use App\Models\Slider;
@@ -36,6 +37,7 @@ class WebViewHomePageController extends Controller
             ->limit(3)
             ->get();
         $projects_don = CounterIcon::latest()->first();
-        return view('frontend.home.index', compact('testimonials', 'services', 'about', 'blogs', 'brands', 'teams', 'slider', 'projects_don'));
+        $projects = Project::where('status', 1)->get();
+        return view('frontend.home.index', compact('testimonials', 'services', 'about', 'blogs', 'brands', 'teams', 'slider', 'projects_don', 'projects'));
     }
 }

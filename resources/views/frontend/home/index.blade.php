@@ -73,105 +73,20 @@
                     <div id="gallery-carousel-3" class="owl-carousel owl-theme owl-slide">
 
                         <!-- gallery item -->
-                        <div class="item s2">
-                            <div class="picframe">
-                                <a class="image-popup-no-margins"
-                                    href="{{ asset('frontend/assets') }}/images-architecture/portfolio/1.jpg">
-                                    <span class="overlay-v">
-                                        <span class="pf_text">
-                                            <span class="project-name">Alaska</span>
+                        @foreach ($projects as $project)
+                            <div class="item s2">
+                                <div class="picframe">
+                                    <a class="image-popup-no-margins" href="{{ asset($project->main_image) }}">
+                                        <span class="overlay-v">
+                                            <span class="pf_text">
+                                                <span class="project-name">{{ $project->title_english }}</span>
+                                            </span>
                                         </span>
-                                    </span>
-                                    <img src="{{ asset('frontend/assets') }}/images-architecture/portfolio/1.jpg"
-                                        alt="" />
-                                </a>
+                                        <img src="{{ asset($project->main_image) }}" alt="" />
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <!-- close gallery item -->
-
-                        <!-- gallery item -->
-                        <div class="item s2">
-                            <div class="picframe">
-                                <a class="image-popup-no-margins"
-                                    href="{{ asset('frontend/assets') }}/images-architecture/portfolio/2.jpg">
-                                    <span class="overlay-v">
-                                        <span class="pf_text">
-                                            <span class="project-name">Montana</span>
-                                        </span>
-                                    </span>
-                                    <img src="{{ asset('frontend/assets') }}/images-architecture/portfolio/2.jpg"
-                                        alt="" />
-                                </a>
-                            </div>
-                        </div>
-                        <!-- close gallery item -->
-
-                        <!-- gallery item -->
-                        <div class="item s2">
-                            <div class="picframe">
-                                <a class="image-popup-no-margins"
-                                    href="{{ asset('frontend/assets') }}/images-architecture/portfolio/3.jpg">
-                                    <span class="overlay-v">
-                                        <span class="pf_text">
-                                            <span class="project-name">Oklahoma</span>
-                                        </span>
-                                    </span>
-                                    <img src="{{ asset('frontend/assets') }}/images-architecture/portfolio/3.jpg"
-                                        alt="" />
-                                </a>
-                            </div>
-                        </div>
-                        <!-- close gallery item -->
-
-                        <!-- gallery item -->
-                        <div class="item s2">
-                            <div class="picframe">
-                                <a class="image-popup-no-margins"
-                                    href="{{ asset('frontend/assets') }}/images-architecture/portfolio/4.jpg">
-                                    <span class="overlay-v">
-                                        <span class="pf_text">
-                                            <span class="project-name">Virginia</span>
-                                        </span>
-                                    </span>
-                                    <img src="{{ asset('frontend/assets') }}/images-architecture/portfolio/4.jpg"
-                                        alt="" />
-                                </a>
-                            </div>
-                        </div>
-                        <!-- close gallery item -->
-
-                        <!-- gallery item -->
-                        <div class="item s2">
-                            <div class="picframe">
-                                <a class="image-popup-no-margins"
-                                    href="{{ asset('frontend/assets') }}/images-architecture/portfolio/5.jpg">
-                                    <span class="overlay-v">
-                                        <span class="pf_text">
-                                            <span class="project-name">Washington</span>
-                                        </span>
-                                    </span>
-                                    <img src="{{ asset('frontend/assets') }}/images-architecture/portfolio/5.jpg"
-                                        alt="" />
-                                </a>
-                            </div>
-                        </div>
-                        <!-- close gallery item -->
-
-                        <!-- gallery item -->
-                        <div class="item s2">
-                            <div class="picframe">
-                                <a class="image-popup-no-margins"
-                                    href="{{ asset('frontend/assets') }}/images-architecture/portfolio/6.jpg">
-                                    <span class="overlay-v">
-                                        <span class="pf_text">
-                                            <span class="project-name">Minnesota</span>
-                                        </span>
-                                    </span>
-                                    <img src="{{ asset('frontend/assets') }}/images-architecture/portfolio/6.jpg"
-                                        alt="" />
-                                </a>
-                            </div>
-                        </div>
+                        @endforeach
                         <!-- close gallery item -->
 
                     </div>

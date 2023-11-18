@@ -212,7 +212,7 @@ class ProjectController extends Controller
         @unlink($service_image->banner_image);
         @unlink($service_image->detais_image_1);
         @unlink($service_image->detais_image_2);
-        @unlink($service_image->detais_image_3); //delete banner_image from local path_folder
+        @unlink($service_image->detais_image_3); 
 
         Project::findOrFail($id)->delete();
         $notification = [
@@ -222,5 +222,12 @@ class ProjectController extends Controller
         return redirect()
             ->back()
             ->with($notification);
+    }
+
+    public function tech_web_project_details($id)
+    {
+        $blog_details = Project::findOrFail($id);
+        $blogs = Project::get();
+        return view('frontend.project.index', compact('blog_details', 'blogs'));
     }
 }

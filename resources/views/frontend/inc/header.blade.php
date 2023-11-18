@@ -1,5 +1,7 @@
 @php
     $logos = App\Models\Logo::latest()->first();
+    $services = \App\Models\Service::get();
+    $projects = \App\Models\Project::where('status', 1)->get();
 @endphp
 <header class="transparent">
     <div class="info">
@@ -44,33 +46,21 @@
                     <ul id="mainmenu">
                         <li><a href="/">Home<span></span></a>
                         </li>
-                        <li><a href="project-wide-4-cols.html">Projects</a>
+
+                        <li><a href="{{ route('about.details') }}">About Us</a>
+                        </li>
+                        <li><a href="#">Projects</a>
                             <ul>
-                                <li><a href="project-wide-4-cols.html">New: Creative Style</a>
-                                    <ul>
-                                        <li><a href="project-creative-one.html">Creative One</a></li>
-                                        <li><a href="project-creative-two.html">Creative Two</a></li>
-                                        <li><a href="project-creative-three.html">Creative Three</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Single Project</a>
-                                    <ul>
-                                        <li><a href="10_project-details.html">Architect</a></li>
-                                        <li><a href="02_project-details.html">Web Studio</a></li>
-                                        <li><a href="08_project-details-industry.html">Industry</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Misc</a>
-                                    <ul>
-                                        <li><a href="project-before-after.html">Before After</a></li>
-                                    </ul>
-                                </li>
+                                @foreach ($projects as $project)
+                                    <li><a
+                                            href="{{ route('project.details', $project->id) }}">{{ $project->title_english }}</a>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </li>
                         <li><a href="#">Services</a>
-                            @php
-                                $services = \App\Models\Service::get();
-                            @endphp
+
                             <ul>
                                 @foreach ($services as $service)
                                     <li>
@@ -90,8 +80,6 @@
                         <li><a href="{{ route('all.blogs.list') }}">Blog</a>
                         </li>
                         <li><a href="{{ route('contact.us') }}">Contact</a>
-                        </li>
-                        <li><a href="{{ route('about.details') }}">About Us</a>
                         </li>
                     </ul>
                 </nav>

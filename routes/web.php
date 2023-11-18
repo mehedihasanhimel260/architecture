@@ -229,10 +229,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/slider/active/{id}', 'tec_web_slider_active')->name('slider.active');
     });
     Route::resource('/admin/project', ProjectController::class);
-    
+
     Route::get('/admin/project/inactive/{id}', [ProjectController::class, 'tec_web_project_inactive'])->name('project.inactive');
     Route::get('/admin/project/active/{id}', [ProjectController::class, 'tec_web_project_active'])->name('project.active');
-    
 });
 
 // frontend all routes///////////////////////////////////////////////////////////////////////////
@@ -248,3 +247,4 @@ Route::get('/blog/details/{id}', [BlogController::class, 'tech_web_blog_details'
 Route::get('/packages', [ServiceController::class, 'tech_web_packages'])->name('packages');
 Route::get('/image-gallery', [GalleryController::class, 'tech_web_image_gallery'])->name('image.gallery');
 Route::get('/video-gallery', [GalleryController::class, 'tech_web_video_gallery'])->name('video.gallery');
+Route::get('/project-details/{id}', [ProjectController::class, 'tech_web_project_details'])->name('project.details');
